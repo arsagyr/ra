@@ -65,9 +65,10 @@ func MakeMatrixBySlice[T Number](cells [][]T) Matrix[T] {
 }
 
 func (matrix Matrix[T]) Determinant() float64 {
-	var d float64 = 0
+	var d, sign float64 = 0, 1
 	var minor Matrix[T]
 	var i, j, ii, ij uint
+
 	if matrix.ColSize == matrix.StrSize && matrix.ColSize != 0 && matrix.StrSize != 0 {
 		if matrix.ColSize == 1 {
 			d = float64(matrix.Cells[0][0])
@@ -108,10 +109,10 @@ func (matrix Matrix[T]) Determinant() float64 {
 								}
 							}
 
-							fmt.Println(cells)
 							minor = MakeMatrix(matrix.ColSize-1, matrix.StrSize-1, cells)
+							d = d + sign*float64(matrix.Cells[i][j])*minor.Determinant()
 
-							d = d + float64(matrix.Cells[i][j])*minor.Determinant()
+							sign *= -1
 						}
 					}
 				}
