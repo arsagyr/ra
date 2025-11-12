@@ -72,20 +72,20 @@ func (drv DRV) Println() {
 	}
 }
 
-func ExpectedValueFloat32(drv DRV) float32 {
-	var ev float32 = 0
-	for i := 0; i < drv.size; i++ {
-		ev = ev + (drv.probabilities[i].ToFloat32() * drv.values[i])
-	}
-	return ev
-}
+// func ExpectedValueFloat32(drv DRV) float32 {
+// 	var ev float32 = 0
+// 	for i := 0; i < drv.size; i++ {
+// 		ev = ev + (drv.probabilities[i].ToFloat32() * drv.values[i])
+// 	}
+// 	return ev
+// }
 
-func VariationFloat32(drv DRV) float32 {
-	var ev float32 = 0
-	var v float32 = 0
-	for i := 0; i < drv.size; i++ {
-		v = v + (drv.probabilities[i].ToFloat32() * drv.values[i] * drv.values[i])
-		ev = ev + (drv.probabilities[i].ToFloat32() * drv.values[i])
-	}
-	return v - (ev * ev)
-}
+// func VariationFloat32(drv DRV) float32 {
+// 	var ev float32 = 0
+// 	var v float32 = 0
+// 	for i := 0; i < drv.size; i++ {
+// 		v = v + (drv.probabilities[i].ToFloat32() * drv.values[i] * drv.values[i])
+// 		ev = ev + (drv.probabilities[i].ToFloat32() * drv.values[i])
+// 	}
+// 	return v - (ev * ev)
+// }

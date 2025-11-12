@@ -3,8 +3,6 @@ package theorver
 import (
 	"log"
 	"math"
-
-	"github.com/arsagyr/ra/fraction"
 )
 
 func toInt64(input any) int64 { //Преобразует целочисленные типы данных в int64
@@ -49,20 +47,20 @@ func Comb(ia any, ib any) int64 {
 }
 
 // Число разупорядочиваний
-func Discomb(in int) int64 {
-	var f int64
-	var i int64
-	n := int64(in)
-	f = 1
-	s := fraction.NewFraction64(1, 1)
-	for i = 1; i <= n; i++ {
-		f = f * i
-		s = fraction.SumFractions64(s, fraction.NewFraction64(int64(math.Pow(-1, float64(i))), f))
-	}
-	s = s.MultiplyByInt(f)
-	res := s.ToInt64()
-	return res
-}
+// func Discomb(in int) int64 {
+// 	var f int64
+// 	var i int64
+// 	n := int64(in)
+// 	f = 1
+// 	s := fraction.NewFraction64(1, 1)
+// 	for i = 1; i <= n; i++ {
+// 		f = f * i
+// 		s = fraction.SumFractions64(s, fraction.NewFraction64(int64(math.Pow(-1, float64(i))), f))
+// 	}
+// 	s = s.MultiplyByInt(f)
+// 	res := s.ToInt64()
+// 	return res
+// }
 
 // Ф-я Бернулли
 func Bernulli(n int, k int, p float32) float64 {

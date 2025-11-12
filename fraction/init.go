@@ -1,7 +1,7 @@
 package fraction
 
 // Метод для создания новой дроби
-func NewFraction(a int, b int) Fraction {
+func NewFraction(a int, b uint) Fraction {
 	if b == 0 {
 		panic("Denominator cannot be zero")
 	}
@@ -11,7 +11,7 @@ func NewFraction(a int, b int) Fraction {
 	}
 }
 
-func NewFraction32(a int32, b int32) Fraction32 {
+func NewFraction32(a int32, b uint32) Fraction32 {
 	if b == 0 {
 		panic("Denominator cannot be zero")
 	}
@@ -21,7 +21,7 @@ func NewFraction32(a int32, b int32) Fraction32 {
 	}
 }
 
-func NewFraction64(a int64, b int64) Fraction64 {
+func NewFraction64(a int64, b uint64) Fraction64 {
 	if b == 0 {
 		panic("Denominator cannot be zero")
 	}
