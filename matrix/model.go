@@ -90,31 +90,32 @@ func (matrix Matrix[T]) Determinant() float64 {
 						}
 					}
 				} else {
-					for i = 0; i < matrix.StrSize; i++ {
-						for j = 0; j < matrix.ColSize; j++ {
+					i = 0
+					for j = 0; j < matrix.ColSize; j++ {
 
-							cells := make([][]T, matrix.StrSize-1)
-							for k := range cells {
-								cells[k] = make([]T, matrix.ColSize-1)
-							}
-							fmt.Println("New minor")
-							fmt.Println(i, j)
-							for ii = 0; ii < matrix.StrSize-1; ii++ {
-								for ij = 0; ij < matrix.ColSize-1; ij++ {
-									if ii < i || ij < j {
-										cells[ii][ij] = matrix.Cells[ii][ij]
-									} else {
-										cells[ii][ij] = matrix.Cells[ii+1][ij+1]
-									}
+						cells := make([][]T, matrix.StrSize-1)
+						for k := range cells {
+							cells[k] = make([]T, matrix.ColSize-1)
+						}
+						fmt.Println("New minor")
+						fmt.Println(i, j)
+						for ii = 0; ii < matrix.StrSize-1; ii++ {
+							for ij = 0; ij < matrix.ColSize-1; ij++ {
+								if ij < j {
+									cells[ii][ij] = matrix.Cells[ii+1][ij]
+								} else {
+									cells[ii][ij] = matrix.Cells[ii+1][ij+1]
 								}
 							}
-
-							minor = MakeMatrix(matrix.ColSize-1, matrix.StrSize-1, cells)
-							d = d + sign*float64(matrix.Cells[i][j])*minor.Determinant()
-
-							sign *= -1
 						}
+						fmt.Println(cells)
+
+						minor = MakeMatrix(matrix.ColSize-1, matrix.StrSize-1, cells)
+						d = d + sign*float64(matrix.Cells[i][j])*minor.Determinant()
+
+						sign *= -1
 					}
+
 				}
 			}
 		}
