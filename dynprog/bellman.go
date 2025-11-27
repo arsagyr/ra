@@ -110,16 +110,13 @@ func BellmanEquation(res int, table [][]int) {
 
 func BellmanEquationVer2(res int, table [][]int) {
 	var c, i, j, l int
-	var pairnum int
 
 	rows := len(table)
 	cols := len(table[0])
-	// steps := make([]int, cols)
 	profits := make([]int, rows)
 	for i = 0; i < rows; i++ {
 		profits[i] = table[i][1]
 	}
-	maxpairnum := 0
 	for c = 1; c < cols-1; c++ {
 		subprofits := make([]int, res+1)
 		for l = 0; l <= res; l++ {
@@ -129,29 +126,80 @@ func BellmanEquationVer2(res int, table [][]int) {
 				for j = 0; j < rows; j++ {
 					if i+table[j][0] == l {
 						pairsum = profits[i] + table[j][c+1]
-						pairnum = j
 					}
-
 				}
 				if maxpairsum < pairsum {
 					maxpairsum = pairsum
-					maxpairnum = pairnum
 				}
-
 			}
 			subprofits[l] = maxpairsum
 		}
 
-		// steps[c] = l - maxpairnum
 		profits = subprofits
 	}
 
-	maxprofit := profits[0]
+	maxprofitnum := 0
 	for i = 1; i <= res; i++ {
-		if profits[i] > maxprofit {
-			maxprofit = profits[i]
+		if profits[i] > profits[maxprofitnum] {
+			maxprofitnum = i
 		}
 	}
 
-	fmt.Printf("Максимальная прибыль инвестиций - %d\n", maxprofit)
+	fmt.Printf("Максимальная прибыль инвестиций - %d\n", profits[maxprofitnum])
+}
+
+func BellmanEquationVer3(res int, table [][]int) {
+	var c, i, j, l int
+
+	rows := len(table)
+	cols := len(table[0])
+	ways := make([][]int, rows, cols)
+	profits := make([]int, rows)
+	for i = 0; i < rows; i++ {
+		profits[i] = table[i][1]
+	}
+
+	for i = 0; i < rows; i++ {
+		ways[i] = make([]int, 1)
+		ways[i][0] = i
+	}
+	for c = 1; c < cols-1; c++ {
+		subprofits := make([]int, res+1)
+		subways := make([][]int, res+1)
+		for l = 0; l <= res; l++ {
+			pairsum := table[0][c] + table[0][c+1]
+			maxpairsum := pairsum
+			maxpoints := []int{c - 1, l}
+			for i = 0; i < len(profits); i++ {
+				points := []int{}
+				for j = 0; j < rows; j++ {
+					if i+table[j][0] == l {
+						pairsum = profits[i] + table[j][c+1]
+						points = append(ways[i], j)
+					}
+				}
+				if maxpairsum < pairsum {
+					maxpairsum = pairsum
+					maxpoints = points
+				}
+			}
+			subprofits[l] = maxpairsum
+			subways[l] = maxpoints
+		}
+
+		profits = subprofits
+		ways = subways
+	}
+
+	maxprofitnum := 0
+	for i = 1; i <= res; i++ {
+		if profits[i] > profits[maxprofitnum] {
+			maxprofitnum = i
+		}
+	}
+	for step, invest := range ways[maxprofitnum] {
+		fmt.Printf("%d, %d \n", step, invest)
+	}
+
+	fmt.Printf("Максимальная прибыль инвестиций - %d\n", profits[maxprofitnum])
 }
